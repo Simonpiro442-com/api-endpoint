@@ -51,5 +51,3 @@ def test_delete_book():
     response = client.get("/books/3")
     assert response.status_code == 404
 
-def test_always_fails():
-    assert False, "This test should fail to verify CI"
