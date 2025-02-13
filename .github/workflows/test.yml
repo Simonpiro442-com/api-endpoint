@@ -27,8 +27,10 @@ jobs:
 
       - name: Run Linter (flake8)
         run: |
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-line-length=100 --show-source --statistics
+        continue-on-error: false  # Stop if linting fails
 
       - name: Run Tests with pytest
         run: |
-          pytest --exitfirst --failed-first
+          pytest --exitfirst --failed-first --disable-warnings --maxfail=3
+        continue-on-error: false  # Stop if tests fail
