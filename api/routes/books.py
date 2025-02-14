@@ -12,7 +12,7 @@ db = InMemoryDB()
 db.books = {
     1: Book(
         id=1,
-        title="The Hobbit",
+        title="Avatar",
         author="J.R.R. Tolkien",
         publication_year=1937,
         genre=Genre.SCI_FI,
@@ -67,5 +67,5 @@ async def delete_book(book_id: int) -> None:
 async def get_book(book_id: int) -> Book:
     book = db.books.get(book_id)
     if not book:
-       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Error")
+       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book not found")
     return book
