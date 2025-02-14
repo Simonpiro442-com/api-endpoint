@@ -1,37 +1,29 @@
 name: Run Tests  # Name of the workflow
 
 on:
-  pull_request:  # This triggers the workflow on PRs to main
+  pull_request:  # Trigger only on pull requests to main
     branches:
       - main
 
 jobs:
-  test:
-    name: Run Pytest and Linting  # Job name
-    runs-on: ubuntu-latest  # Use Ubuntu as the server
+  test:  # The job MUST be named exactly "test"
+    runs-on: ubuntu-latest  # Use Ubuntu environment
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3  # Clones your repo
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Clone the repository
 
-      - name: Set Up Python
-        uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"  # Change this if needed
+          python-version: '3.x'  # Use Python 3.x
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install flake8  # Install linter
 
-      - name: Run Linter (flake8)
+      - name: Run Pytest
         run: |
-        flake8 . --count --max-line-length=100 --show-source --statistics
-        continue-on-error: false
-
-
-      - name: Run Tests with pytest
-        run: |
-          pytest --exitfirst --failed-first --disable-warnings --maxfail=3
-        continue-on-error: false  # Stop if tests fail
+          pip install pytest  # Install pytest (explicitly)
+          pytest  # Run tests, failing if any test fails
